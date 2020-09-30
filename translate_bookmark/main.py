@@ -14,12 +14,10 @@ def cli() -> None:
     if result is None:
         print('can\'t analyse.')
         return
-    write_csv(result=result, url=url)
+    use_translate = get_argument('translate')
+    write_csv(result=result, url=url, use_translate=use_translate)
 
 
 def get_url():
     url: str = get_argument(key='url')
     return Url(url=url)
-
-
-cli()

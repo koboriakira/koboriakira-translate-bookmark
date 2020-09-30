@@ -17,4 +17,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     'url',
     type=str,)
+parser.add_argument(
+    '-t', '--translate',
+    type=bool, default=False)
 vars_args = vars(parser.parse_args())

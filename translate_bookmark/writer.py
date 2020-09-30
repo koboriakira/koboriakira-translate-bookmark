@@ -11,7 +11,7 @@ FILENAME_NOT_NGSL = 'not_ngsl.csv'
 translator = Translator()
 
 
-def write_csv(result: Dict[str, Any], url: Url):
+def write_csv(result: Dict[str, Any], url: Url, use_translate: bool):
     dir_name = _create_folder(url=url.url)
     morphied_word_dict: Dict[str, int] = result['morphied_word_dict']
 
@@ -30,9 +30,13 @@ def write_csv(result: Dict[str, Any], url: Url):
         writer = csv.writer(f)
         not_ngsl_word_list = result['not_ngsl_word_list']
         for word in not_ngsl_word_list:
-            ja = _translate(word=word)
-            count = morphied_word_dict[word]
-            writer.writerow([word, ja, count])
+            if use_translate:
+                ja = _translate(word=word)
+                count = morphied_word_dict[word]
+                writer.writerow([word, ja, count])
+            else:
+                count = morphied_word_dict[word]
+                writer.writerow([word, count])
 
 
 def _create_folder(url: str) -> str:

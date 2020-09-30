@@ -10,7 +10,7 @@ setup(
     packages=find_packages(),
     entry_points="""
       [console_scripts]
-      packers = translate_bookmark.main:cli
+      translate = translate_bookmark.main:cli
     """,
     install_requires=open('requirements.txt').read().splitlines(),
 )
