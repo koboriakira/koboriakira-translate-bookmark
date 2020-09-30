@@ -28,7 +28,7 @@ class Domain(Enum):
         for domain in Domain:
             if value == domain.value:
                 return domain
-        raise Domain.OTHER
+        return Domain.OTHER
 
 
 class DomainError(Exception):
