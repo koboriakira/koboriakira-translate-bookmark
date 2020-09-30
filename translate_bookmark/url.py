@@ -15,17 +15,20 @@ class Url:
     def get_article(self):
         if self.domain == Domain.PACKERSCOM:
             return article.get_article_for_packers(url=self.url)
+        if self.domain == Domain.OTHER:
+            return article.get_article(url=self.url)
 
 
 class Domain(Enum):
     PACKERSCOM = 'packers.com'
+    OTHER = 'other'
 
     @classmethod
     def to_enum(cls, value: str) -> Domain:
         for domain in Domain:
             if value == domain.value:
                 return domain
-        raise DomainError
+        raise Domain.OTHER
 
 
 class DomainError(Exception):
