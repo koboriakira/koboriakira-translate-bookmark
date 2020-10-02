@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="translate_bookmark",
+    name="koboriakira-translate-bookmark",
     version='1.0',
     description='自分がよくみるサイトの翻訳手助けツール',
     author='Kobori Akira',
     author_email='private.beats@gmail.com',
-    url='https://github.com/koboriakira/translate-packerscom',
+    url='https://github.com/koboriakira/koboriakira-translate-bookmark',
     packages=find_packages(),
     entry_points="""
       [console_scripts]

@@ -15,12 +15,15 @@ class Url:
     def get_article(self):
         if self.domain == Domain.PACKERSCOM:
             return article.get_article_for_packers(url=self.url)
+        if self.domain == Domain.PACKERSWIRE:
+            return article.get_article_for_packerswire(url=self.url)
         if self.domain == Domain.OTHER:
             return article.get_article(url=self.url)
 
 
 class Domain(Enum):
     PACKERSCOM = 'packers.com'
+    PACKERSWIRE = 'packerswire.usatoday.com'
     OTHER = 'other'
 
     @classmethod
@@ -36,13 +39,16 @@ class DomainError(Exception):
 
 
 def _get_domain(url: str) -> Domain:
-    domain = url.replace(
+    domain_str = url.replace(
         'http://',
         '').replace(
         'https://',
         '').split('/')[0]
-    domain = _remove_sub_domain(domain=domain)
-    return Domain.to_enum(value=domain)
+    domain = Domain.to_enum(value=domain_str)
+    if domain != Domain.OTHER:
+        return domain
+    domain_str = _remove_sub_domain(domain=domain_str)
+    return Domain.to_enum(value=domain_str)
 
 
 def _remove_sub_domain(domain: str) -> str:

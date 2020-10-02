@@ -11,6 +11,16 @@ def get_article_for_packers(url: str) -> Optional[str]:
         return ''
 
 
+def get_article_for_packerswire(url: str) -> Optional[str]:
+    soup = _get_soup(url=url)
+    try:
+        selected = list(map(lambda s: s.text, soup.select('.articleBody p')))
+        print("\n".join(selected))
+        return "\n".join(selected)
+    except Exception:
+        return ''
+
+
 def get_article(url: str) -> Optional[str]:
     soup = _get_soup(url=url)
     try:
@@ -25,4 +35,3 @@ def _get_soup(url: str) -> BeautifulSoup:
         return BeautifulSoup(res.content, 'html.parser')
     except Exception:
         return None
-
