@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="koboriakira-translate-bookmark",
-    version='1.2',
+    version='1.3',
     description='自分がよくみるサイトの翻訳手助けツール',
     author='Kobori Akira',
     author_email='private.beats@gmail.com',
