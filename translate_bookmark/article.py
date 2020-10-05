@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from typing import Optional
+import re
 
 
 def get_article_for_packers(url: str) -> Optional[str]:
@@ -15,7 +16,16 @@ def get_article_for_packerswire(url: str) -> Optional[str]:
     soup = _get_soup(url=url)
     try:
         selected = list(map(lambda s: s.text, soup.select('.articleBody p')))
-        print("\n".join(selected))
+        return "\n".join(selected)
+    except Exception:
+        return ''
+
+
+def get_article_for_dev_to(url: str) -> Optional[str]:
+    soup = _get_soup(url=url)
+    try:
+        selected = list(map(lambda s: re.sub(r'(^\s+|\s+$)', '', s.text),
+                            soup.select('#article-body')))
         return "\n".join(selected)
     except Exception:
         return ''

@@ -17,6 +17,8 @@ class Url:
             return article.get_article_for_packers(url=self.url)
         if self.domain == Domain.PACKERSWIRE:
             return article.get_article_for_packerswire(url=self.url)
+        if self.domain == Domain.DEV_TO:
+            return article.get_article_for_dev_to(url=self.url)
         if self.domain == Domain.OTHER:
             return article.get_article(url=self.url)
 
@@ -24,6 +26,7 @@ class Url:
 class Domain(Enum):
     PACKERSCOM = 'packers.com'
     PACKERSWIRE = 'packerswire.usatoday.com'
+    DEV_TO = 'dev.to'
     OTHER = 'other'
 
     @classmethod
