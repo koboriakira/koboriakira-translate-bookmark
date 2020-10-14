@@ -1,47 +1,51 @@
-from bs4 import BeautifulSoup
-import requests
-from typing import Optional
+from typing import List, Optional, Pattern
 import re
+from gazpacho import get, Soup
+
+BREAK_LINE: Pattern = re.compile(r'(^\s+|\s+$)')
 
 
 def get_article_for_packers(url: str) -> Optional[str]:
-    soup = _get_soup(url=url)
     try:
-        return soup.select('.nfl-c-article__container')[0].text
+        soup = Soup(get(url))
+        lines = soup.find(
+            'div', {
+                'class': 'nfl-c-body-part nfl-c-body-part--text'})
+        return _arranged(lines)
     except Exception:
         return ''
 
 
 def get_article_for_packerswire(url: str) -> Optional[str]:
-    soup = _get_soup(url=url)
     try:
-        selected = list(map(lambda s: s.text, soup.select('.articleBody p')))
-        return "\n".join(selected)
+        soup = Soup(get(url))
+        lines = soup.find('div', {'class': 'articleBody'}).find('p')
+        return _arranged(lines)
     except Exception:
         return ''
 
 
 def get_article_for_dev_to(url: str) -> Optional[str]:
-    soup = _get_soup(url=url)
     try:
-        selected = list(map(lambda s: re.sub(r'(^\s+|\s+$)', '', s.text),
-                            soup.select('#article-body')))
-        return "\n".join(selected)
+        soup = Soup(get(url))
+        lines = soup.find('div', {'id': 'article-body'}).find('p')
+        return _arranged(lines)
     except Exception:
         return ''
 
 
 def get_article(url: str) -> Optional[str]:
-    soup = _get_soup(url=url)
     try:
-        return soup.select('article')[0].text
+        soup = Soup(get(url))
+        lines = soup.find('p')
+        return _arranged(lines)
     except Exception:
         return ''
 
 
-def _get_soup(url: str) -> BeautifulSoup:
-    try:
-        res = requests.get(url)
-        return BeautifulSoup(res.content, 'html.parser')
-    except Exception:
-        return None
+def _arranged(lines: List[str]) -> str:
+    return "\n".join(list(map(lambda line: _replace_bl(line.text), lines)))
+
+
+def _replace_bl(text: str):
+    return re.sub(pattern=BREAK_LINE, repl='', string=text)

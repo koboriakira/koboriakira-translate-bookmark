@@ -4,12 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
+autopep8 = "*"
+flake8 = "*"
 
 [packages]
-bs4 = "*"
-requests = "*"
 googletrans = "*"
-pytest = "*"
+gazpacho = "*"
 
 [requires]
 python_version = "3.8"

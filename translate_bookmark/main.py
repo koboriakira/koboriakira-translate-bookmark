@@ -2,7 +2,6 @@ from typing import Optional
 from translate_bookmark.config import get_argument
 from translate_bookmark.writer import write_csv
 from translate_bookmark.analyse import analyse
-from translate_bookmark.url import Url
 from translate_bookmark.translate_bookmark import get_text
 
 
